@@ -1,14 +1,23 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import App from './App.vue'
-import router from './router'
+import Desktop from './Desktop/App.vue'
+import desktopRouter from './Desktop/router'
 
-const app = createApp(App)
+import Mobile from './Mobile/App.vue'
+import mobileRouter from './Mobile/router'
+
+let app;
+
+if (window.innerHeight > window.innerWidth) {
+  app = createApp(Mobile)
+  app.use(mobileRouter)
+  console.log('Mobile')
+} else {
+  app = createApp(Desktop)
+  app.use(desktopRouter)
+  console.log('Desktop')
+}
 
 app.use(createPinia())
-app.use(router)
-
 app.mount('#app')
