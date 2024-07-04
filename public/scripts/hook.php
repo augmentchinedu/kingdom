@@ -9,14 +9,13 @@ if (isset($_GET['update'])) {
     
     $res = $zipper->open('application.zip');
     
-    if ($res === true) {
-        
+    if ($res === true) {      
         unlink(__FILE__);
-        $zipper->extractTo('./');
+        $zipper->extractTo('../');
         $zipper->close();
         unlink('application.zip');
         echo 'App Installation Successful';
-        header("location: index.html");
+        header("location: ../index.html");
     }
 } else {
     echo "Can't Update";

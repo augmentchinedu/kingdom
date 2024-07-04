@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import router from '../Desktop/router'
+import router from '../router'
 
+const api =
+  process.env.NODE_ENV >= 'production' ? 'https://kingdomhub.xyz' : 'http://localhost:3000'
 export const useAppStore = defineStore('app', {
   state: () => ({
     app: {
@@ -15,7 +17,7 @@ export const useAppStore = defineStore('app', {
   actions: {
     async init() {
       console.log('App Initialized')
-      const { data } = await axios.get(`http://localhost:3000/api/app/${this.app.domain}`)
+      const { data } = await axios.get(`${api}/api/app/${this.app.domain}`)
       console.log(data)
       if (data == 'Domain Not Found') router.push('/install')
       else {
@@ -25,12 +27,12 @@ export const useAppStore = defineStore('app', {
     },
     async register(form) {
       console.log(form)
-      let { data } = await axios.post('http://localhost:3000/api/app/register', form)
+      let { data } = await axios.post(`${api}/api/app/register`, form)
       console.log(data)
       if (data == 'Registered') {
-        let { data } = await axios.get(`http://localhost:3000/api/app/${this.app.domain}`)
+        let { data } = await axios.get(`${api}/api/app/${this.app.domain}`)
         this.app = data
-        console.log(this.app);
+        console.log(this.app)
         router.push('/')
       }
     }
